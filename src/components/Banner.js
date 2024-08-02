@@ -25,8 +25,8 @@ const Banner = () => {
             Math.floor(Math.random() * request.data.results.length)
             ].id;
         // 특정 영화의 더 상세한 정보를 가져오기(비디오 정보도 포함)
-        const { data: movieDetail } = await axios.get(`movie/${movieId}`, {
-            params: { append_to_response: "videos" }
+        const {data: movieDetail} = await axios.get(`movie/${movieId}`, {
+            params: {append_to_response: "videos"}
         })
 
         setMovie(movieDetail);
@@ -60,7 +60,7 @@ const Banner = () => {
                     backgroundSize: "cover"
                 }}
             >
-                <div style={{ fontSize: 10 }} className='banner__contents'>
+                <div style={{fontSize: 10}} className='banner__contents'>
                     <h1 className='banner__title'>
                         {movie.title || movie.name || movie.original_name}
                     </h1>
@@ -80,7 +80,7 @@ const Banner = () => {
                         {truncate(movie.overview, 100)}
                     </p>
                 </div>
-                <div className='banner--fadeBottom' />
+                <div className='banner--fadeBottom'/>
             </header>
         )
     }
@@ -107,7 +107,7 @@ const HomeContainer = styled.div`
 const Iframe = styled.iframe`
   width: 100%;
   height: 100%;
-  z-index: -1; 
+  z-index: -1;
   opacity: 0.65;
   border: none;
 
