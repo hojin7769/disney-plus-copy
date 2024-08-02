@@ -14,7 +14,7 @@ const Row = ({title, id ,fetchUrl}) => {
         setMovies(request.data.results);
         console.log(request.data.results);
         return request;
-        
+
     },[fetchUrl]);
 
 
