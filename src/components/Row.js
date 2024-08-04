@@ -1,18 +1,20 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import axios from "../api/axios";
 import "./Row.css";
+import MovieModal from "./MovieModal";
 
 
 const Row = ({title, id, fetchUrl}) => {
 
     const [movies, setMovies] = useState([]);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [movieSelected, setMovieSelected] = useState({});
+
 
     const fetchMovieData = useCallback(async () => {
         const request = await axios.get(fetchUrl);
         setMovies(request.data.results);
-        console.log(request.data.results);
         return request;
-
     }, [fetchUrl]);
 
 
@@ -21,17 +23,19 @@ const Row = ({title, id, fetchUrl}) => {
     }, [fetchMovieData]);
 
     const handleClick = (movie) => {
+        setModalOpen(true);
+        setMovieSelected(movie);
     }
     return (
         <div>
             <h2>{title}</h2>
             <div className='slider'>
-                <div className='slider__arrow-left'>
-                    <span className='arrow'
-                          onClick={() => {
-                              document.getElementById(id).scrollLeft -= window.innerWidth - 80;
-                          }}
-                    >
+                <div className='slider__arrow-left'
+                     onClick={() => {
+                         document.getElementById(id).scrollLeft -= window.innerWidth - 80;
+                     }}
+                >
+                    <span className='arrow'>
                         {"<"}
                     </span>
                 </div>
@@ -45,16 +49,22 @@ const Row = ({title, id, fetchUrl}) => {
                         />
                     ))}
                 </div>
-                <div className='slider__arrow-right'>
-                    <span className='arrow'
-                          onClick={() => {
-                              document.getElementById(id).scrollLeft += window.innerWidth - 80;
-                          }}
-                    >
+                <div className='slider__arrow-right'
+                     onClick={() => {
+                         document.getElementById(id).scrollLeft += window.innerWidth - 80;
+                     }}
+                >
+                    <span className='arrow'>
                         {">"}
                     </span>
                 </div>
             </div>
+            {modalOpen &&
+                <MovieModal
+                    {...movieSelected}
+                    setModalOpen={setModalOpen}
+                />
+            }
         </div>
     );
 };
